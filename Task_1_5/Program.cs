@@ -31,7 +31,7 @@ namespace Task_1_5
             Console.ReadKey();
         }
 
-        public static List<Task> GetTheInitialListOfTasks()
+        private static List<Task> GetTheInitialListOfTasks()
         {
             Console.WriteLine("Populate Tasks in Format (press some key to Start): \nTask Name \nPriority (1=High, 2=Medium, 3=Low) \nComplexity (1=High, 2=Medium, 3=Low)");          
             var keyPressed = Console.ReadKey();
@@ -49,7 +49,9 @@ namespace Task_1_5
                     string taskComplexity = Console.ReadLine();
                     if ((taskName != null) && (taskName != "") && (taskPriority != null) && ((taskPriority == PRIORITY_1) || (taskPriority == PRIORITY_2) || (taskPriority == PRIORITY_3)) && (taskComplexity != null) && ((taskComplexity == COMPLEXITY_1) || (taskComplexity == COMPLEXITY_2) || (taskComplexity == COMPLEXITY_3)) && (keyPressed.Key != ConsoleKey.Escape))
                     {
-                        tasks.Insert(i, new Task { TaskName = taskName, Priority = taskPriority, Complexity = taskComplexity });
+                        Priority taskPriorityEnum = (Priority)(Convert.ToInt32(taskPriority));
+                        Complexity taskComplexityEnum = (Complexity)(Convert.ToInt32(taskComplexity));
+                        tasks.Insert(i, new Task { TaskName = taskName, Priority = taskPriorityEnum, Complexity = taskComplexityEnum });
                         Console.WriteLine("Press Escape (Esc) to complete the list OR any other character to continue");
                         keyPressed = Console.ReadKey();
                         break;
@@ -66,7 +68,7 @@ namespace Task_1_5
         return tasks;
         }
 
-        public static void PrintTheListOfTasks(List<Task> tasks)
+        private static void PrintTheListOfTasks(List<Task> tasks)
         {
             foreach (Task task in tasks)
             {
@@ -74,58 +76,58 @@ namespace Task_1_5
             }
         }
 
-        public static void GetTimeRequiredToPerformAllTheTasksFromTheList(List<Task> tasks)
+        private static void GetTimeRequiredToPerformAllTheTasksFromTheList(List<Task> tasks)
         {
-            int hoursRequiredToPerformAllTasks = tasks.FindAll(comp => comp.Complexity == COMPLEXITY_1).Count * 4 + tasks.FindAll(comp => comp.Complexity == COMPLEXITY_2).Count * 2 + tasks.FindAll(comp => comp.Complexity == COMPLEXITY_3).Count;
+            int hoursRequiredToPerformAllTasks = tasks.FindAll(comp => comp.Complexity == Complexity.High).Count * 4 + tasks.FindAll(comp => comp.Complexity == Complexity.Medium).Count * 2 + tasks.FindAll(comp => comp.Complexity == Complexity.Low).Count;
             Console.WriteLine("\nTo perform all the tasks you need " + hoursRequiredToPerformAllTasks + " hour(s)");
         }
 
-        public static void PrintTheListOfTasksFilteredByPriority(List<Task> tasks)
+        private static void PrintTheListOfTasksFilteredByPriority(List<Task> tasks)
         {   
-            if (tasks.FindAll(comp => comp.Priority == PRIORITY_1).Count > 0)
+            if (tasks.FindAll(comp => comp.Priority == Priority.High).Count > 0)
             {
-                Console.WriteLine($"\nTasks of Priority = {PRIORITY_1}");
-                PrintTheListOfTasks(tasks.FindAll(comp => comp.Priority == PRIORITY_1));
+                Console.WriteLine($"\nTasks of Priority = {Priority.High}");
+                PrintTheListOfTasks(tasks.FindAll(comp => comp.Priority == Priority.High));
             }
-            if (tasks.FindAll(comp => comp.Priority == PRIORITY_2).Count > 0)
+            if (tasks.FindAll(comp => comp.Priority == Priority.Medium).Count > 0)
             {
-                Console.WriteLine($"\nTasks of Priority = {PRIORITY_2}");
-                PrintTheListOfTasks(tasks.FindAll(comp => comp.Priority == PRIORITY_2));
+                Console.WriteLine($"\nTasks of Priority = {Priority.Medium}");
+                PrintTheListOfTasks(tasks.FindAll(comp => comp.Priority == Priority.Medium));
             }
-            if (tasks.FindAll(comp => comp.Priority == PRIORITY_3).Count > 0)
+            if (tasks.FindAll(comp => comp.Priority == Priority.Low).Count > 0)
             {
-                Console.WriteLine($"\nTasks of Priority = {PRIORITY_3}");
-                PrintTheListOfTasks(tasks.FindAll(comp => comp.Priority == PRIORITY_3));
+                Console.WriteLine($"\nTasks of Priority = {Priority.Low}");
+                PrintTheListOfTasks(tasks.FindAll(comp => comp.Priority == Priority.Low));
             }
         }
 
-        public static void GetTheListOfTasksThatCanBeDoneDuringNDays(List<Task> tasks)
+        private static void GetTheListOfTasksThatCanBeDoneDuringNDays(List<Task> tasks)
         {
             int daysAvailableForTaskExcecution = GetDaysAvailableToPerformTasks();
             int daysConvertedToWorkingHours = daysAvailableForTaskExcecution * WORKING_HOURS_OF_DAY;
             Console.WriteLine("\nAmount of available hours to perform the tasks is: " + daysConvertedToWorkingHours);
 
-            List <Task> sortedTaskList = GetPrioritySortedList(tasks, PRIORITY_1).Concat(GetPrioritySortedList(tasks, PRIORITY_2)).Concat(GetPrioritySortedList(tasks, PRIORITY_3)).ToList();
+            List <Task> sortedTaskList = GetPrioritySortedList(tasks, Priority.High).Concat(GetPrioritySortedList(tasks, Priority.Medium)).Concat(GetPrioritySortedList(tasks, Priority.Low)).ToList();
             Console.WriteLine("\nList of Tasks that can be done based on Priority and available working hours is below:");
             PrintTheListOfTasks(GetTasksResultList(sortedTaskList, daysConvertedToWorkingHours));
         }
 
-        public static List<Task> GetTasksResultList(List<Task> tasks, int workingHours)
+        private static List<Task> GetTasksResultList(List<Task> tasks, int workingHours)
         {
             List<Task> tasksResult = new List<Task>();
             for (int i=0; i < tasks.Count; i++)
             {
-                if ((tasks[i].Complexity == COMPLEXITY_1) && (0 <= (workingHours - HOURS_TO_DO_COMPLEXITY_1_TASK)))
+                if ((tasks[i].Complexity == Complexity.High) && (0 <= (workingHours - HOURS_TO_DO_COMPLEXITY_1_TASK)))
                 {
                     tasksResult.Add(tasks[i]);
                     workingHours = workingHours - HOURS_TO_DO_COMPLEXITY_1_TASK;
                 }
-                if ((tasks[i].Complexity == COMPLEXITY_2) && (0 <= (workingHours - HOURS_TO_DO_COMPLEXITY_2_TASK)))
+                if ((tasks[i].Complexity == Complexity.Medium) && (0 <= (workingHours - HOURS_TO_DO_COMPLEXITY_2_TASK)))
                 {
                     tasksResult.Add(tasks[i]);
                     workingHours = workingHours - HOURS_TO_DO_COMPLEXITY_2_TASK;
                 }
-                if ((tasks[i].Complexity == COMPLEXITY_3) && (0 <= (workingHours - HOURS_TO_DO_COMPLEXITY_3_TASK)))
+                if ((tasks[i].Complexity == Complexity.Low) && (0 <= (workingHours - HOURS_TO_DO_COMPLEXITY_3_TASK)))
                 {
                     tasksResult.Add(tasks[i]);
                     workingHours = workingHours - HOURS_TO_DO_COMPLEXITY_3_TASK;
@@ -134,7 +136,7 @@ namespace Task_1_5
             return tasksResult;
         }
 
-        public static List <Task> GetPrioritySortedList(List<Task> tasks, string priority)
+        private static List <Task> GetPrioritySortedList(List<Task> tasks, Priority priority)
         {
             IEnumerable<Task> queryPriorityTasks =
             from task in tasks
@@ -144,7 +146,7 @@ namespace Task_1_5
             return queryPriorityTasks.ToList();
         }
 
-        public static int GetDaysAvailableToPerformTasks()
+        private static int GetDaysAvailableToPerformTasks()
         {
             Console.WriteLine("\nPopulate how many days (integer) are available for tasks performing e.g. 1 or 2, etc. ");
             int attempt = 0;

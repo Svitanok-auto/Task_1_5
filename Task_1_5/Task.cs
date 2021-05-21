@@ -3,7 +3,7 @@
     public class Task
     {
         public string TaskName { get; set; }
-        public string Priority { get; set; }
-        public string Complexity { get; set; }
+        public Priority Priority { get; set; }
+        public Complexity Complexity { get; set; }
     }
 }
