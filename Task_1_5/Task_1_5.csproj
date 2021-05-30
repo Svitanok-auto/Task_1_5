@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Complexity.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Priority.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="Program.cs" />

@@ -2,8 +2,8 @@
 {
     public enum Complexity
     {
-        High = 1,
+        High = 4,
         Medium = 2,
-        Low = 3
+        Low = 1
     }
 }
