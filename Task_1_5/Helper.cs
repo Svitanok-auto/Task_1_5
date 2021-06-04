@@ -4,39 +4,32 @@ using System.Linq;
 
 namespace Task_1_5
 {
-    public static class Helper
+    public static class Helper<T>
     {
         public const int MAX_ATTEMPTS = 30;
-        public static Priority VerifyPriorityInput()
+        public static T VerifyPriorityInput()
         {
             Console.WriteLine("Populate Priority 1; 2 or 3 (1=High, 2=Medium, 3=Low)");
-            return MatchToPriority(Convert.ToInt32(GetValidatePriorityOrComplexity()));  
+            return MatchToPriorityOrComplexity(Convert.ToInt32(GetValidatePriorityOrComplexity()));
         }
 
-        public static Complexity VerifyComplexityInput()
+        public static T VerifyComplexityInput()
         {
             Console.WriteLine("Populate Complexity 1; 2 or 3 (1=High, 2=Medium, 3=Low)");
-            return MatchToComplexity(Convert.ToInt32(GetValidatePriorityOrComplexity()));
+            return MatchToPriorityOrComplexity(Convert.ToInt32(GetValidatePriorityOrComplexity()));
         }
 
-        public static Priority MatchToPriority(int priority)
+        public static T MatchToPriorityOrComplexity(int priorityOrComplexity)
         {
-            List<Priority> listPriority = Enum.GetValues(typeof(Priority)).OfType<Priority>().ToList();
-            Priority priorityValue = listPriority[priority - 1];
-            return priorityValue;
-        }
-
-        public static Complexity MatchToComplexity(int complexity)
-        {
-            List<Complexity> listComplexity = Enum.GetValues(typeof(Complexity)).OfType<Complexity>().ToList();
-            Complexity complexityValue = listComplexity[complexity - 1];
-            return complexityValue;
+            List<T> listPriority = Enum.GetValues(typeof(T)).OfType<T>().ToList();
+            T priorityOrComplexityValue = listPriority[priorityOrComplexity - 1];
+            return priorityOrComplexityValue;
         }
 
         public static int GetValidatePriorityOrComplexity()
         {
             int attempt = 0;
-            int choiceToSeeGarland = 0;
+            int validComplexityOrPriority;
             while (attempt < MAX_ATTEMPTS)
             {
                 string inputString = Console.ReadLine();
@@ -52,9 +45,9 @@ namespace Task_1_5
                         }
                         else
                         {
-                            choiceToSeeGarland = Convert.ToInt32(inputString);
-                            Console.WriteLine("\n Input value is= " + choiceToSeeGarland);
-                            return choiceToSeeGarland;
+                            validComplexityOrPriority = Convert.ToInt32(inputString);
+                            Console.WriteLine("\n Input value is= " + validComplexityOrPriority);
+                            return validComplexityOrPriority;
                         }
                     }
                     catch (SystemException ex)
@@ -76,7 +69,7 @@ namespace Task_1_5
         {
             Console.WriteLine("\nPopulate how many days (integer) are available for tasks performing e.g. 1 or 2, etc. ");
             int attempt = 0;
-            int daysAvailable = 0;
+            int daysAvailable;
             while (attempt < MAX_ATTEMPTS)
             {
                 string inputString = Console.ReadLine();
