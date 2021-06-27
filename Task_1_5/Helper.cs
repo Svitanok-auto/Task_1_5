@@ -4,22 +4,22 @@ using System.Linq;
 
 namespace Task_1_5
 {
-    public static class Helper<T>
+    public static class Helper
     {
         public const int MAX_ATTEMPTS = 30;
-        public static T VerifyPriorityInput()
+        public static Priority VerifyPriorityInput()
         {
             Console.WriteLine("Populate Priority 1; 2 or 3 (1=High, 2=Medium, 3=Low)");
-            return MatchToPriorityOrComplexity(Convert.ToInt32(GetValidatePriorityOrComplexity()));
+            return MatchToPriorityOrComplexity<Priority>(Convert.ToInt32(GetValidatePriorityOrComplexity()));
         }
 
-        public static T VerifyComplexityInput()
+        public static Complexity VerifyComplexityInput()
         {
             Console.WriteLine("Populate Complexity 1; 2 or 3 (1=High, 2=Medium, 3=Low)");
-            return MatchToPriorityOrComplexity(Convert.ToInt32(GetValidatePriorityOrComplexity()));
+            return MatchToPriorityOrComplexity<Complexity>(Convert.ToInt32(GetValidatePriorityOrComplexity()));
         }
 
-        public static T MatchToPriorityOrComplexity(int priorityOrComplexity)
+        public static T MatchToPriorityOrComplexity<T>(int priorityOrComplexity)
         {
             List<T> enumValues = Enum.GetValues(typeof(T)).OfType<T>().ToList();
             T priorityOrComplexityValue = enumValues[priorityOrComplexity - 1];

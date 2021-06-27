@@ -42,8 +42,8 @@ namespace Task_1_5
                             new Task 
                             {
                                 TaskName = taskName,
-                                Priority = Helper<Priority>.VerifyPriorityInput(), 
-                                Complexity = Helper<Complexity>.VerifyComplexityInput() 
+                                Priority = Helper.VerifyPriorityInput(), 
+                                Complexity = Helper.VerifyComplexityInput() 
                             }
                         );
 
@@ -90,7 +90,7 @@ namespace Task_1_5
 
         private static void GetTheListOfTasksThatCanBeDoneDuringNDays(List<Task> tasks)
         {
-            int daysAvailableForTaskExcecution = Helper<int>.GetDaysAvailableToPerformTasks();
+            int daysAvailableForTaskExcecution = Helper.GetDaysAvailableToPerformTasks();
             int daysConvertedToWorkingHours = daysAvailableForTaskExcecution * WORKING_HOURS_OF_DAY;
             Console.WriteLine("\nAmount of available hours to perform the tasks is: " + daysConvertedToWorkingHours);
 
