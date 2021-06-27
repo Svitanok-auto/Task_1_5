@@ -21,8 +21,8 @@ namespace Task_1_5
 
         public static T MatchToPriorityOrComplexity(int priorityOrComplexity)
         {
-            List<T> listPriority = Enum.GetValues(typeof(T)).OfType<T>().ToList();
-            T priorityOrComplexityValue = listPriority[priorityOrComplexity - 1];
+            List<T> enumValues = Enum.GetValues(typeof(T)).OfType<T>().ToList();
+            T priorityOrComplexityValue = enumValues[priorityOrComplexity - 1];
             return priorityOrComplexityValue;
         }
 
